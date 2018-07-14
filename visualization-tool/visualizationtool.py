@@ -8,11 +8,15 @@ that allow for the user to select up three dimensional vectors, a label and a vi
 
 import csv
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 ##from frame import Frame
 ##from event import *
 ##from vector import Vector
 from hoppertransform import hopperTransform
+from plot import twodimplot
+from plot import threedimplot
 
 vectors = []
 events = []
@@ -109,12 +113,32 @@ def createEvent():
     print(variables)
     indVar = variables[0]
     depVar = variables[1]
-    eqInput = input("Your equation:")
-    equationRaw = equationformat(eqInput)
-    print(equationRaw)
-    indVarLoc = locateVariables(equationRaw, indVar)
-    depVarLoc = locateVariables(equationRaw, depVar)
-    hopperTransform(indVarLoc, eqInput)
+    ##eqInput = input("Your equation:")
+    ##equationRaw = equationformat(eqInput)
+    ##print(equationRaw)
+    ##indVarLoc = locateVariables(equationRaw, indVar)
+    ##depVarLoc = locateVariables(equationRaw, depVar)
+    ##hopperTransform(indVarLoc, eqInput)
+    if len(indVar) == 2:
+        var = variables[0]
+        xvar = var[0]
+        yvar = var[1]
+        xvec = int(xvar[1])-1
+        yvec = int(yvar[1])-1
+        twodimplot(vectors[xvec], vectors[yvec])
+    elif len(indVar) == 3:
+        ##threedimplot(variables)
+        var = variables[0]
+        xvar = var[0]
+        yvar = var[1]
+        zvar = var[2]
+        xvec = int(xvar[1])-1
+        yvec = int(yvar[1])-1
+        zvec = int(zvar[1])-1
+        print("xvec: ", vectors[xvec], "yvec: ", vectors[yvec], "zvec: ", vectors[zvec])
+        threedimplot(xvec, yvec, zvec)
+    else:
+        pass
 
 
 def interface():
