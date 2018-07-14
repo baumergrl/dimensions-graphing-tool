@@ -8,110 +8,51 @@ that allow for the user to select up three dimensional vectors, a label and a vi
 
 import csv
 import matplotlib.pyplot as plt
+import gc
+
+from frame import Frame
+from event import Event
+from vector import Vector
 
 vectors = []
-frames = []
 events = []
 
 ##Write welcome to the program
 
 def loadData():
     filename = input("Location of csv file to pull data from?\n")
-        
+    
     with open(filename, 'r') as rawdata:
         reader = csv.reader(rawdata, delimiter=',')
-        i = 0
         for row in reader:
-            vectors.append(row)
+            tempRow = []
+            for j in row:
+                tempRow.append(int(j))
+            vectors.append(tempRow)
 
-def appHelp():
-    ##help interface to the documentation
-    pass
 
 def status():
     ##Check the status of vectors, frames and events
-    print(len(vectors), " vectors found.")
+    print("Vectors found: ", len(vectors))
     counter = 1
     for i in vectors:
         print(counter, "\t", i[0:3])
-    print(len(frames), " frames found.")
-    for i in frames:
+        i+=1
+    print(len(events), " events found.")
+    for i in events:
         print(i)
 
+def frameStatus():
+    print(len(frames), " frames found.")
+    counter = 1
+    for i in frames:
+        print(counter, "\t", frames[0:5])
+        i+=1
+
 def createFrame():
-    '''
-    Creates a new frame.
-    Frame structure [int number of plots, [plot 1 desig],.., [plot n desig]]
-    Plot structure  [x vector, y vector, z vector, x label, y label, z label, xmax, xmin, ymax, ymin, zmax, zmin]
-    '''
-    newframe = []
+    print(self.vectors)
+    yvec = input("Independent Vector?")
     
-    queryVectors = input("Vectors for new frame (i.e. \"x, [y], [z]\"):\n")
-    tempVectors = queryVectors.split()
-    for i in tempVectors:
-        newframe.insert(len(newframe), i)
-    queryCustom = input("Do you wish to customize the frame?")
-    if queryCustom == "yes":
-        newframe = customizeFrame(newframe)
-    elif queryCustom == "no":
-        if len(newframe) == 1:
-            newframe.append(10)
-            newframe.append(-10)
-        elif len(newframe) == 2:
-            i=0
-            while i < 2:
-                newframe.append(10)
-                newframe.append(-10)
-                i+=1
-        elif len(newframe) == 3:
-            i=0
-            while i < 3:
-                newframe.append(10)
-                newframe.append(-10)
-                i+=1
-        else:
-            pass
-            ##WRITE EXCEPTION FOR GREATER THAN 3 AND IF ANSWER NOT YES/NO
-    else:
-        pass
-    frames.append(newframe)
-
-def customizeFrame(currFrame):
-    ##Used to customize a frame
-    pass
-
-def deleteFrame():
-    ##Deletes an existing frame
-    frameSelect = input("Frame to delete?")
-    frame = int(frameSelect)-1
-    del frames[frame]
-    print("Succesfully deleted frame ", frame)
-
-def createEvent():
-    ##Creates a new event
-    pass
-
-def deleteEvent():
-    ##deletes an existing event
-    pass
-
-def runEvent():
-    ##Runs an event
-    pass
-
-def plotFrame():
-    ##plots a static frame
-    queryFrame = input("Frame to plot: ")
-    qF = int(queryFrame)-1
-    ##if 1 vector, plot(), if 2 vectors subplot(), if 3 vectors matplot3d()
-    frame = frames[qF]
-    if len(frame) <= 6:
-        plt.plot(frame[0], frame[1])
-        plt.xlim([frame[3], frame[2]])
-        plt.ylim([frame[5], frame[4]])
-        plt.show()
-    else:
-        pass
 
 def interface():
         comm = input(">>>")
@@ -125,10 +66,12 @@ def interface():
             appHelp()
             interface()
         elif comm == "create frame":
-            createFrame()
+            newframe = createFrame()
+            frames.append(newframe)
             interface()
         elif comm == "create event":
-            createEvent()
+            newevent = createEvent()
+            events.append(newevent)
             interface()
         elif comm == "delete event":
             deleteEvent()

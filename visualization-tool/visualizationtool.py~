@@ -15,8 +15,6 @@ import numpy as np
 ##from event import *
 ##from vector import Vector
 from hoppertransform import hopperTransform
-from plot import twodimplot
-from plot import threedimplot
 
 vectors = []
 events = []
